@@ -1,0 +1,27 @@
+{
+  "ecmaVersion": 6,
+  "libs": [
+    "browser"
+  ],
+  "loadEagerly": [
+    "webpack.config.js",
+    "bin/www",
+    "**/*.js"
+  ],
+  "dontLoad": [
+  "node_modules/**"
+  ],
+  "plugins": {
+    "node-express": {},
+    "complete_strings": {},
+    "node": {},
+    "lint": {},
+    "angular": {},
+    "requirejs": {},
+    "modules": {},
+    "es_modules": {},
+    "doc_comment": {
+      "fullDocs": true
+    }
+  }
+}
