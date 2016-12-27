@@ -17,8 +17,8 @@ export default class Videos extends Component {
 
 		return (
 			<div styleName={`container${remoteVideo ? ' withRemote' : ''}`}>
-				{localVideo ? <video src={localVideo} autoPlay muted /> : null}
 				{remoteVideo ? <video src={remoteVideo} autoPlay /> : null}
+				{localVideo ? <video src={localVideo} autoPlay muted /> : null}
 			</div>
 		);
 	}
