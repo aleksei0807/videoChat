@@ -29,13 +29,14 @@ function mapStateToProps(state) {
 	changeLocalVideo,
 	changeRemoteVideo,
 })
-@CSSModules(styles)
+@CSSModules(styles, {allowMultiple: true})
 export default class Call extends Component {
 	constructor(...args) {
 		super(...args);
 		this.state = {
 			callToUsername: '',
 			error: false,
+			showContainer: false,
 		};
 	}
 
@@ -89,32 +90,42 @@ export default class Call extends Component {
 		this.props.handleLeave();
 	}
 
+	toggleMobile = () => {
+		this.setState({
+			showContainer: !this.state.showContainer,
+		});
+	}
+
 	render() {
 		const { remoteVideo } = this.props.callObj;
 
 		return (
-			<div styleName="container">
-				{this.props.callObj.error || this.state.error || null}
+			<div styleName="call">
 				{!remoteVideo ? (
-					<form onSubmit={this.call}>
-						<label htmlFor="callEmail" className="label">Call to: </label>
-						<input
-							id="callEmail"
-							name="callEmail"
-							type="email"
-							placeholder="email"
-							value={this.state.callToUsername}
-							onChange={this.changeCall}
-							/>
-						<button className="btn-success btn">Call</button>
-					</form>
+					<button styleName="mobile" onClick={this.toggleMobile}>Call</button>
+				) : null}
+				{!remoteVideo ? (
+					<div styleName={`container${this.state.showContainer ? '' : ' hide'}`}>
+						{this.props.callObj.error || this.state.error || null}
+						<form onSubmit={this.call}>
+							<label htmlFor="callEmail">Call to: </label>
+							<input
+								id="callEmail"
+								name="callEmail"
+								type="email"
+								placeholder="email"
+								value={this.state.callToUsername}
+								onChange={this.changeCall}
+								/>
+							<button>Call</button>
+						</form>
+					</div>
 				) : null}
 				{remoteVideo ? (
 					<button
 						type="button"
-						onClick={this.hangUp}
-						className="btn-danger btn">
-						Hang Up
+						onClick={this.hangUp}>
+					Hang Up
 					</button>
 				) : null}
 			</div>

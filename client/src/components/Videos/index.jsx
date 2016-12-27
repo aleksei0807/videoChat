@@ -10,13 +10,13 @@ function mapStateToProps(state) {
 }
 
 @connect(mapStateToProps)
-@CSSModules(styles)
+@CSSModules(styles, {allowMultiple: true})
 export default class Videos extends Component {
 	render() {
 		const { localVideo, remoteVideo } = this.props.callObj;
 
 		return (
-			<div styleName="container">
+			<div styleName={`container${remoteVideo ? ' withRemote' : ''}`}>
 				{localVideo ? <video src={localVideo} autoPlay muted /> : null}
 				{remoteVideo ? <video src={remoteVideo} autoPlay /> : null}
 			</div>

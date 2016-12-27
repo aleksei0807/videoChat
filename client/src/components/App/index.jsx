@@ -43,7 +43,7 @@ export default class App extends Component {
 							{user.logoutError ? <span>Logout error</span> : null}
 							{user.email}
 							<button
-								className="btn"
+								styleName="logout"
 								onClick={this.props.logout}>
 								Logout
 							</button>

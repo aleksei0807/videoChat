@@ -43,6 +43,7 @@ export function logout() {
 	return (dispatch: (action: Action) => Action, getStore: Function) => {
 		send({
 			type: 'logout',
+			name: getStore().user.email,
 		})(dispatch, getStore);
 	};
 }

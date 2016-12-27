@@ -3,11 +3,37 @@
 	align-items: center;
 	justify-content: center;
 	width: 100%;
-	height: calc(100% - 46px);
+	height: calc(100% - 45px);
 	background: rgba(0, 0, 0, 0.7);
 
 	& video {
 		max-width: 100%;
-		max-height: calc(100% - 46px);
+		max-height: 100%;
+	}
+}
+@media (max-height: 400px) {
+	.container {
+		align-items: start;
+	}
+}
+@media (max-height: 320px),
+		(max-width: 400px) {
+	.container {
+		height: calc(100% - 35px);
+	}
+}
+
+@media (orientation: landscape) {
+	.container.withRemote video {
+		max-width: 50%;
+	}
+}
+@media (orientation: portrait) {
+	.container {
+		flex-direction: column;
+
+		&.withRemote video {
+			max-height: 50%;
+		}
 	}
 }

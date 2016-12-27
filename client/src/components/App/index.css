@@ -39,5 +39,50 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: calc(100% - 46px);
+	height: calc(100% - 45px);
+}
+
+@media (max-width: 1100px) {
+	.header {
+		& h2 {
+			display: none;
+		}
+	}
+}
+
+@media (max-width: 600px) {
+	.logout {
+		position: relative;
+		text-indent: -20000px;
+	}
+	.logout::after {
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: block;
+		margin: 5px 13px;
+		width: 28px;
+		height: 28px;
+		background: inline('./logout.svg');
+		background-size: cover;
+		content: "";
+	}
+}
+
+@media (max-height: 320px),
+		(max-width: 400px) {
+	.container button {
+		padding: 5px 15px;
+	}
+	.logout::after {
+		margin: 4px 7px;
+		width: 20px;
+		height: 20px;
+	}
+	.header {
+		height: 35px;
+	}
+	.center {
+		height: calc(100% - 35px);
+	}
 }
