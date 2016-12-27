@@ -1,0 +1,23 @@
+.container {
+	& input {
+		display: inline-block;
+		margin: 0 5px;
+		padding: 8px;
+		border: 2px solid rgba(41,65,114,.9);
+		background: none;
+		box-shadow: none;
+		color: #fafafa;
+		vertical-align: middle;
+		white-space: normal;
+		font-size: 16px;
+		line-height: 1.3;
+		-webkit-appearance: none;
+
+		&:focus {
+			outline:0;
+		}
+	}
+	& label {
+		font-weight: 600;
+	}
+}

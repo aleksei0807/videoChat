@@ -2,3 +2,4 @@ node_modules
 *.log
 client/build
 server/build
+sslcert/*

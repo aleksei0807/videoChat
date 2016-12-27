@@ -24,7 +24,7 @@ var postCssLoader = [
 module.exports = {
 	devtool: 'cheap-eval-source-map',
 	entry: [
-		'webpack-dev-server/client?http://10.2.0.1:' + PORT,
+		'webpack-dev-server/client?https://10.2.0.1:' + PORT,
 		'webpack/hot/dev-server',
 		'./client/src/index.jsx'
 	],
@@ -99,6 +99,7 @@ module.exports = {
 		contentBase: './client/dist',
 		hot: true,
 		host: '10.2.0.1',
-		port: PORT
+		port: PORT,
+		https: true,
 	}
 };
