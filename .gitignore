@@ -1,5 +1,7 @@
 node_modules
 *.log
-client/build
-server/build
-sslcert/*
+/frontend/dist
+/backend/build
+/server
+/frontend/server/server
+/sslcert/*

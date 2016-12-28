@@ -26,17 +26,17 @@ module.exports = {
 	entry: [
 		'webpack-dev-server/client?https://10.2.0.1:' + PORT,
 		'webpack/hot/dev-server',
-		'./client/src/index.jsx'
+		'./frontend/src/index.jsx'
 	],
 	output: {
-		path: path.join(__dirname, 'client/dist'),
-		filename: '/js/index.js'
+		path: path.join(__dirname, 'frontend/dist'),
+		filename: 'index.js'
 	},
 	plugins: [
 		new webpack.NoErrorsPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
 		new HtmlWebpackPlugin({
-			template: './client/index.html'
+			template: './frontend/src/index.html'
 		}),
 		new webpack.optimize.DedupePlugin(),
 		new webpack.DefinePlugin({
@@ -90,16 +90,16 @@ module.exports = {
 			autoprefixer,
 			precss({
 				variables: {
-					variables: require('./client/src/styles/vars.css')
+					variables: require('./frontend/src/styles/vars.css')
 				}
 			}),
 			functions({
-				functions: require('./client/src/styles/funcs.css')
+				functions: require('./frontend/src/styles/funcs.css')
 			})
 		];
 	},
 	devServer: {
-		contentBase: './client/dist',
+		contentBase: './frontend/dist',
 		hot: true,
 		host: '10.2.0.1',
 		port: PORT,

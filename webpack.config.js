@@ -3,6 +3,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var RemoveWebpackPlugin = require('remove-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var functions = require('postcss-functions');
 var precss = require('precss');
@@ -21,14 +22,19 @@ var postCssLoader = [
 module.exports = {
 	devtool: 'source-map',
 	entry: {
-		index: './client/src/index.jsx'
+		index: './frontend/src/index.jsx'
 	},
 	output: {
-		path: './client/dist',
-		filename: 'js/index.js'
+		path: './frontend/dist',
+		filename: 'index.js'
 	},
 	plugins: [
+		new RemoveWebpackPlugin('./frontend/dist', 'hide'),
 		new webpack.NoErrorsPlugin(),
+		new HtmlWebpackPlugin({
+            template: './frontend/src/index.html',
+            inject: true
+        }),
 		new webpack.optimize.DedupePlugin(),
 		new webpack.DefinePlugin({
 		    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
@@ -79,11 +85,11 @@ module.exports = {
 			autoprefixer,
 			precss({
 				variables: {
-					variables: require('./client/src/styles/vars.css')
+					variables: require('./frontend/src/styles/vars.css')
 				}
 			}),
 			functions({
-				functions: require('./client/src/styles/funcs.css')
+				functions: require('./frontend/src/styles/funcs.css')
 			})
 		];
 	}
@@ -91,7 +97,7 @@ module.exports = {
 
 if (NODE_ENV === 'development') {
 	module.exports.plugins.unshift(
-		new RemoveWebpackPlugin('./client/dist', 'hide')
+		new RemoveWebpackPlugin('./frontend/dist', 'hide')
 	);
 }
 
