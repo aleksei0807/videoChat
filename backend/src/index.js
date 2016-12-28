@@ -10,7 +10,7 @@ const credentials = { key: privateKey, cert: certificate };
 const app = express();
 
 const httpsServer = https.createServer(credentials, app);
-httpsServer.listen(9090, '10.2.0.1');
+httpsServer.listen(9090, '127.0.0.1');
 
 const wss = new WebSocketServer({
 	server: httpsServer,

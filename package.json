@@ -10,7 +10,7 @@
     "frontend-build-dev": "NODE_ENV='development' webpack && go build ./frontend/server",
     "frontend-watch": "go build ./frontend/server && NODE_ENV='development' webpack --watch",
     "frontend-dev": "webpack-dev-server --history-api-fallback --config webpack.config.hot.js",
-    "frontend-start": "./server -addr=10.2.0.1:8080 -dir=./frontend/dist",
+    "frontend-start": "./server -addr=127.0.0.1:8080 -dir=./frontend/dist",
     "frontend": "npm run frontend-build && npm run frontend-start",
     "backend-dev": "babel-node ./backend/src/index.js",
     "backend-build": "babel backend/src --out-dir backend/build",
