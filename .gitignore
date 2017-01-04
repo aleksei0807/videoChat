@@ -1,5 +1,6 @@
 node_modules
 *.log
+*.log*
 /frontend/dist
 /backend/build
 /server

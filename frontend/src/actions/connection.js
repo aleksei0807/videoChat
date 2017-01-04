@@ -38,7 +38,7 @@ function handler(data, dispatch, getStore) {
 
 export function connection() {
 	return (dispatch: (action: Action) => Action, getStore: Function) => {
-		conn = new WebSocket('wss://10.2.0.1:9090');
+		conn = new WebSocket('wss://127.0.0.1:9090');
 
 		conn.onopen = () => {
 			console.log('Connected to the signaling server');
