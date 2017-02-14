@@ -2,6 +2,7 @@ import fs from 'fs';
 import https from 'https';
 import express from 'express';
 import { Server as WebSocketServer } from 'ws';
+import { backend } from '../../config.json';
 
 const privateKey = fs.readFileSync('sslcert/key.pem', 'utf8');
 const certificate = fs.readFileSync('sslcert/cert.pem', 'utf8');
@@ -10,7 +11,7 @@ const credentials = { key: privateKey, cert: certificate };
 const app = express();
 
 const httpsServer = https.createServer(credentials, app);
-httpsServer.listen(9090, '127.0.0.1');
+httpsServer.listen(backend.port, backend.host);
 
 const wss = new WebSocketServer({
 	server: httpsServer,
@@ -38,16 +39,16 @@ wss.on('connection', connection => {
 
 		switch (data.type) {
 		case 'login': {
-			console.log('User logged', data.name);
+			console.log('User logged', data.email);
 
-			if (users[data.name]) {
+			if (users[data.email]) {
 				sendTo(localConnection, {
 					type: 'login',
 					success: false,
 				});
 			} else {
-				users[data.name] = localConnection;
-				localConnection.name = data.name;
+				users[data.email] = localConnection;
+				localConnection.email = data.email;
 
 				sendTo(localConnection, {
 					type: 'login',
@@ -58,10 +59,10 @@ wss.on('connection', connection => {
 			break;
 		}
 		case 'logout': {
-			console.log('User logout', data.name);
+			console.log('User logout', data.email);
 
-			if (users[data.name]) {
-				delete users[data.name];
+			if (users[data.email]) {
+				delete users[data.email];
 
 				sendTo(localConnection, {
 					type: 'logout',
@@ -76,16 +77,16 @@ wss.on('connection', connection => {
 			break;
 		}
 		case 'offer': {
-			console.log('Sending offer to: ', data.name);
+			console.log('Sending offer to: ', data.email);
 
-			const conn = users[data.name];
+			const conn = users[data.email];
 
 			if (conn) {
-				localConnection.otherName = data.name;
+				localConnection.otherName = data.email;
 				sendTo(conn, {
 					type: 'offer',
 					offer: data.offer,
-					name: localConnection.name,
+					email: localConnection.email,
 				});
 			} else {
 				sendTo(localConnection, {
@@ -99,11 +100,11 @@ wss.on('connection', connection => {
 		}
 
 		case 'answer': {
-			console.log('Sending answer to: ', data.name);
-			const conn = users[data.name];
+			console.log('Sending answer to: ', data.email);
+			const conn = users[data.email];
 
 			if (conn) {
-				localConnection.otherName = data.name;
+				localConnection.otherName = data.email;
 				sendTo(conn, {
 					type: 'answer',
 					answer: data.answer,
@@ -114,8 +115,8 @@ wss.on('connection', connection => {
 		}
 
 		case 'candidate': {
-			console.log('Sending candidate to: ', data.name);
-			const conn = users[data.name];
+			console.log('Sending candidate to: ', data.email);
+			const conn = users[data.email];
 
 			if (conn) {
 				sendTo(conn, {
@@ -128,8 +129,8 @@ wss.on('connection', connection => {
 		}
 
 		case 'leave': {
-			console.log('Disconnecting from ', data.name);
-			const conn = users[data.name];
+			console.log('Disconnecting from ', data.email);
+			const conn = users[data.email];
 
 			if (conn) {
 				conn.otherName = null;
@@ -153,8 +154,8 @@ wss.on('connection', connection => {
 	});
 
 	connection.on('close', () => {
-		if (connection.name) {
-			delete users[connection.name];
+		if (connection.email) {
+			delete users[connection.email];
 
 			if (connection.otherName) {
 				console.log('Disconnecting from ', connection.otherName);

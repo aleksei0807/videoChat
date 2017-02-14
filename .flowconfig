@@ -1,3 +1,5 @@
+[ignore]
+.*node_modules/fbjs.*
 [options]
 module.name_mapper.extension='css' -> '<PROJECT_ROOT>/flow/CSSModule.js.flow'
 module.name_mapper.extension='png' -> '<PROJECT_ROOT>/flow/CSSModule.js.flow'

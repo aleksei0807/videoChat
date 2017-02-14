@@ -1,0 +1,3 @@
+/* @flow */
+export const CHANGE_LOCAL_VIDEO = 'CHANGE_LOCAL_VIDEO';
+export const CHANGE_REMOTE_VIDEO = 'CHANGE_REMOTE_VIDEO';

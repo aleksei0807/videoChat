@@ -1,25 +1,30 @@
 /* @flow */
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component, PropTypes } from 'react';
 import CSSModules from 'react-css-modules';
-import { login } from '../../actions/user';
 import emailRegexp from '../../utils/emailRegexp';
 import styles from './index.css';
 
-@connect(null, { login })
 @CSSModules(styles)
 export default class Login extends Component {
 	/* eslint-disable react/sort-comp */
 	state: {
 		email: string;
-		error: false|string;
+		error: ?string;
+	};
+
+	static propTypes = {
+		user: PropTypes.shape({
+			email: PropTypes.string,
+			error: PropTypes.bool,
+		}),
+		login: PropTypes.func,
 	};
 
 	constructor(...args: Array<*>) {
 		super(...args);
 		this.state = {
 			email: '',
-			error: false,
+			error: null,
 		};
 	}
 	/* eslint-enable react/sort-comp */
@@ -28,7 +33,7 @@ export default class Login extends Component {
 		e.preventDefault();
 		if (emailRegexp.test(this.state.email)) {
 			this.setState({
-				error: false,
+				error: null,
 			});
 			this.props.login(this.state.email);
 		} else {
@@ -51,8 +56,8 @@ export default class Login extends Component {
 			<div styleName="container">
 				<h3 styleName="title">Please sign in</h3>
 				<form onSubmit={this.login}>
-					{this.state.error || null}
 					{error ? <span>Ooops...try a different email</span> : null}
+					{this.state.error}
 					<label htmlFor="emailInput" className="label">Your email</label>
 					<input
 						id="emailInput"

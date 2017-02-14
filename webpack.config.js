@@ -48,6 +48,10 @@ module.exports = {
 	module: {
 		loaders: [
 			{
+				test: /\.json$/,
+				loader: 'json-loader'
+			},
+			{
 				test: /\.(js|jsx)$/,
 				loaders: ['babel'],
 				exclude: /node_modules/,
@@ -78,6 +82,7 @@ module.exports = {
 			require('postcss-assets')({
 				loadPaths: ['**'],
 			}),
+			require('postcss-mq-keyframes'),
 			postCssModules({
 				scopeBehaviour: 'global',
 				generateScopedName: '[name]__[local]___[hash:base64:5]',

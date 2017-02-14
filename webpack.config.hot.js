@@ -1,6 +1,8 @@
 /* eslint-disable */
 const NODE_ENV = process.env.NODE_ENV || 'development';
-const PORT = process.env.PORT || '8080';
+const conf = require('./config.json').frontend;
+const PORT = conf.port;
+const host = conf.host;
 console.log("Listening on", PORT);
 var path = require('path');
 var webpack = require('webpack');
@@ -24,7 +26,7 @@ var postCssLoader = [
 module.exports = {
 	devtool: 'cheap-eval-source-map',
 	entry: [
-		'webpack-dev-server/client?https://127.0.0.1:' + PORT,
+		`webpack-dev-server/client?https://${host}:${PORT}`,
 		'webpack/hot/dev-server',
 		'./frontend/src/index.jsx'
 	],
@@ -49,6 +51,10 @@ module.exports = {
 	},
 	module: {
 		loaders: [
+			{
+				test: /\.json$/,
+				loader: 'json-loader'
+			},
 			{
 				test: /\.(js|jsx)$/,
 				loaders: ['react-hot', 'babel'],
@@ -83,6 +89,7 @@ module.exports = {
 			require('postcss-assets')({
 				loadPaths: ['**'],
 			}),
+			require('postcss-mq-keyframes'),
 			postCssModules({
 				scopeBehaviour: 'global',
 				generateScopedName: '[name]__[local]___[hash:base64:5]',
@@ -101,7 +108,7 @@ module.exports = {
 	devServer: {
 		contentBase: './frontend/dist',
 		hot: true,
-		host: '127.0.0.1',
+		host,
 		port: PORT,
 		https: true,
 	}

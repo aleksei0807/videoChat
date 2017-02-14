@@ -1,24 +1,22 @@
-// @flow
+/* @flow */
 import type { Action } from '../types/action';
 import {
-	LOGIN_START,
 	LOGIN_SUCCESS,
 	LOGIN_ERROR,
 	LOGOUT,
-	LOGOUT_ERROR,
 } from '../actions/user';
+import { SEND } from '../actions/connection';
 
 const defaultState = {
 	email: null,
 	loginEmail: null,
 	error: false,
-	logoutError: false,
 };
 
 export default function general(state: Object = defaultState, action: Action) {
 	switch (action.type) {
-	case LOGIN_START: {
-		if (action.payload) {
+	case SEND: {
+		if (action.payload && action.payload.type === 'login') {
 			return {...state, ...{ loginEmail: action.payload.email, error: false } };
 		}
 		return state;
@@ -29,8 +27,6 @@ export default function general(state: Object = defaultState, action: Action) {
 		return {...state, ...{ loginEmail: null, error: true } };
 	case LOGOUT:
 		return defaultState;
-	case LOGOUT_ERROR:
-		return {...state, ...{ logoutError: true } };
 	default:
 		return state;
 	}

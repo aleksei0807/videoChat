@@ -1,46 +1,33 @@
-// @flow
+/* @flow */
 import type { Action } from '../types/action';
 import {
-	LEAVE,
+	END_LEAVE,
 	CALL,
 	HANDLE_OFFER,
-	CHANGE_LOCAL_VIDEO,
-	CHANGE_REMOTE_VIDEO,
-} from '../actions/call';
+	HANDLE_ERROR } from '../actions/call';
+import { LOGOUT } from '../actions/user';
 
 const defaultState = {
-	leave: false,
 	email: null,
-	error: false,
-	localVideo: null,
-	remoteVideo: null,
 };
 
 export default function general(state: Object = defaultState, action: Action) {
 	switch (action.type) {
-	case LEAVE:
-		return {...state, ...{ leave: true, email: null, error: false, remoteVideo: null } };
+	case END_LEAVE:
+		return {...state, ...{ email: null } };
+	case LOGOUT:
+		return {...state, ...{ email: null } };
+	case HANDLE_ERROR:
+		return {...state, ...{ email: null } };
 	case CALL: {
 		if (action.payload) {
-			return {...state, ...{ email: action.payload.email, error: false } };
+			return {...state, ...{ email: action.payload.email } };
 		}
 		return state;
 	}
 	case HANDLE_OFFER: {
 		if (action.payload) {
-			return {...state, ...{ email: action.payload.email, error: false } };
-		}
-		return state;
-	}
-	case CHANGE_LOCAL_VIDEO: {
-		if (action.payload) {
-			return {...state, ...{ localVideo: action.payload.video } };
-		}
-		return state;
-	}
-	case CHANGE_REMOTE_VIDEO: {
-		if (action.payload) {
-			return {...state, ...{ remoteVideo: action.payload.video } };
+			return {...state, ...{ email: action.payload.email } };
 		}
 		return state;
 	}

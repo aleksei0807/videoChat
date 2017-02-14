@@ -1,9 +1,11 @@
-// @flow
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 import * as reducers from '../reducers';
+import saga from '../sagas';
 
-const createStoreWithMiddleware = applyMiddleware(thunkMiddleware)(createStore);
+const sagaMiddleware = createSagaMiddleware();
+const createStoreWithMiddleware = applyMiddleware(thunkMiddleware, sagaMiddleware)(createStore);
 
 export default function configureStore(initialState: any) {
 	const store = createStoreWithMiddleware(
@@ -21,6 +23,8 @@ export default function configureStore(initialState: any) {
 			store.replaceReducer(nextRootReducer);
 		});
 	}
+
+	sagaMiddleware.run(saga);
 
 	return store;
 }
