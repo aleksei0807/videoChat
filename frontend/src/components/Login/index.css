@@ -4,7 +4,7 @@
 	align-items: center;
 	padding: 15px;
 	width: 300px;
-	border-bottom: 1px rgba(41, 65, 114, .85) solid;
+	border: 1px rgba(41, 65, 114, .85) solid;
 	background: rgba(41, 65, 114, .75);
 	box-shadow: 0px 1px 3px 0px rgba(41,65,114,1);
 	color: #fafafa;
