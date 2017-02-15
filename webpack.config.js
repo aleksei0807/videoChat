@@ -26,7 +26,7 @@ module.exports = {
 	},
 	output: {
 		path: './frontend/dist',
-		filename: 'index.js'
+		filename: 'static/index.js'
 	},
 	plugins: [
 		new RemoveWebpackPlugin('./frontend/dist', 'hide'),
@@ -39,7 +39,7 @@ module.exports = {
 		new webpack.DefinePlugin({
 		    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
 		}),
-		new ExtractTextPlugin("styles.css", {})
+		new ExtractTextPlugin("static/styles.css", {})
 	],
 	resolve: {
 		moduleDirectories: ['node_modules'],
@@ -61,16 +61,16 @@ module.exports = {
 				loader: ExtractTextPlugin.extract('style-loader', postCssLoader.join(''))
 			}, {
 				test: /\.png$/,
-				loader: "file-loader?name=/images/[hash].[ext]"
+				loader: "file-loader?name=/static/images/[hash].[ext]"
 			}, {
 				test: /\.jpg$/,
-				loader: "file-loader?name=/images/[hash].[ext]"
+				loader: "file-loader?name=/static/images/[hash].[ext]"
 			}, {
 				test: /\.gif$/,
-				loader: "file-loader?name=/images/[hash].[ext]"
+				loader: "file-loader?name=/static/images/[hash].[ext]"
 			}, {
 				test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-				loader: 'file-loader?name=/fonts/[hash].[ext]'
+				loader: 'file-loader?name=/static/fonts/[hash].[ext]'
 			}
 		]
 	},
